@@ -1,0 +1,26 @@
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        if(s.length() < 2) return s;
+        int left, right, start;
+        int max_len = 1;
+        int max_left = 0;
+        int n = s.length();
+        for(int start = 0; start < n && n - start > max_len / 2; ){
+            left = right = start;
+            while(s[right] == s[right + 1] && right < n - 1){
+                ++right;
+            }
+            start = right + 1;
+            while(left > 0 && s[left -1] == s[right + 1] && right < n - 1){
+                --left;
+                ++right;
+            }
+            if(max_len < right - left + 1){
+                max_left = left;
+                max_len = right - left + 1;
+            }
+        }
+        return s.substr(max_left, max_len);
+    }
+};
