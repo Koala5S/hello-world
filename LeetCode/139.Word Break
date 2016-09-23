@@ -1,0 +1,21 @@
+class Solution {
+public:
+    bool wordBreak(string s, unordered_set<string>& wordDict) {
+        if(wordDict.size() == 0) return false;
+        int n = s.length();
+        vector<bool> exist(n + 1, false);
+        exist[0] = true;
+        for(int i = 1; i <= n; ++i){
+            for(int j = i - 1; j >= 0; --j){
+                if(exist[j]){
+                    string word = s.substr(j, i - j);
+                    if(wordDict.find(word) != wordDict.end()){
+                        exist[i] = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return exist[n];
+    }
+};
