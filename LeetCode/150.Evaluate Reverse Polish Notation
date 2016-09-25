@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<string> token;
+        for(auto t : tokens){
+            if(!is_operator(t)){
+                token.push(t);
+            }else{
+               int y = stoi(token.top());
+               token.pop();
+               int x = stoi(token.top());
+               token.pop();
+               if(t[0] == '+') x += y;
+               else if(t[0] == '-') x -= y;
+               else if(t[0] == '*') x *= y;
+               else x /= y;
+               token.push(to_string(x));
+            }
+        }
+        return stoi(token.top());
+    }
+private:
+    bool is_operator(const string &t){
+        return t.size() == 1 && string("+-*/").find(t) != string::npos;
+    }
+};
