@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string getPermutation(int n, int k) {
+        int f = 1;
+        string result(n, '0');
+        for(int i = 1; i <= n; ++i){
+            f *= i;
+            result[i - 1] += i;
+        }
+        k--;
+        for(int i = 0; i < n; ++i){
+            f /= n - i;
+            int j = i + k / f;
+            char c = result[j];
+            for(; j > i; j--){
+                result[j] = result[j - 1];
+            }
+            result[i] = c;
+            k %= f;
+        }
+        return result;
+    }
+};
