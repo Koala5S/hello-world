@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<string> readBinaryWatch(int num) {
+        vector<int> numbers({1,2,4,8,1,2,4,8,16,32});
+        vector<string> result;
+        find(num, result, numbers, 0, 0, 0, 0);
+        return result;
+    }
+private:
+    void find(int num, vector<string> &result, vector<int> &numbers, int cur, int index, int hour, int min){
+        if(hour > 11 || min > 59) return;
+        if(cur == num){
+            result.push_back(to_string(hour) + ":" + (min < 10 ? "0" : "") + to_string(min));
+            return;
+        }
+        for(int i = index; i < numbers.size(); ++i){
+            if(i < 4)
+                find(num, result, numbers, cur + 1, i + 1, hour + numbers[i], min);
+            else{
+                find(num, result, numbers, cur + 1, i + 1, hour, min + numbers[i]);
+            }
+        }
+    }
+};
