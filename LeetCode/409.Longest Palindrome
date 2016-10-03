@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int longestPalindrome(string s) {
+        vector<int> letter(52,0);
+        int count = 0;
+        for(int i = 0; i < s.length(); ++i){
+            int num = s[i] < 'a' ? s[i] - 'A' + 26 : s[i] - 'a';
+            if(++letter[num] % 2) count++;
+            else count--;
+        }
+        return s.length() - max(0, count - 1);
+    }
+};
