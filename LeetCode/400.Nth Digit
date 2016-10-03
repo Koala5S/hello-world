@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int findNthDigit(int n) {
+       long base = 9, digit = 1, num = 1, index;
+       while(n - base * digit > 0){
+           n -= base * digit;
+           base *= 10;
+           digit++;
+       }
+       index = n % digit;
+       if(index == 0) index = digit;
+       for(int i = 1; i < digit; ++i){
+           num *= 10;
+       }
+       num += n / digit - (index == digit ? 1 : 0);
+       for(int i = index; i < digit; ++i){
+           num /= 10;
+       }
+       return num % 10;
+    }
+};
