@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int maxRotateFunction(vector<int>& A) {
+        int n = A.size();
+        if(n == 0) return 0;
+        int sum = 0, rot_sum = 0;
+        for(int i = 0; i < n; ++i){
+            sum += A[i];
+            rot_sum += i * A[i];
+        }
+        int result = rot_sum;
+        for(int i = n - 1; i > 0; --i){
+            rot_sum = rot_sum + sum - A[i] * n;
+            result = max(rot_sum, result);
+        }
+        return result;
+    }
+};
