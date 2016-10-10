@@ -1,0 +1,11 @@
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        int ps = 0;
+        int sLen = s.length(), tLen = t.length();
+        for(int pt = 0; pt < tLen && ps < sLen; pt++){
+            if(t[pt] == s[ps]) ps++;
+        }
+        return ps == sLen;
+    }
+};
