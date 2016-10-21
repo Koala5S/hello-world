@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
+        vector<unordered_set<int>> graph = make_graph(numCourses, prerequisites);
+        vector<bool> onpath(numCourses), visited(numCourses);
+        for(int i = 0; i < numCourses; ++i){
+            if(!visited[i] && cycle(graph, i, onpath, visited))
+                return false;
+        }
+        return true;
+    }
+private:
+    vector<unordered_set<int>> make_graph(int numCourses, vector<pair<int, int>>& prerequisites){
+        vector<unordered_set<int>> graph(numCourses);
+        for(auto courses : prerequisites){
+            graph[courses.second].insert(courses.first);
+        }
+        return graph;
+    }
+    bool cycle(vector<unordered_set<int>>& graph, int node, vector<bool>& onpath, vector<bool>& visited){
+        if(visited[node]) return false;
+        onpath[node] = true;
+        visited[node] = true;
+        for (int neighbor : graph[node])
+            if (onpath[neighbor] || cycle(graph, neighbor, onpath, visited))
+                return true;
+        return onpath[node] = false;
+    }
+};
