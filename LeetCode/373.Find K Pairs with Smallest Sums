@@ -1,0 +1,27 @@
+class Solution {
+public:
+    struct cmp{
+        bool operator()(pair<int, int> &p1, pair<int, int> &p2){
+            return p1.first + p1.second < p2.first + p2.second;
+        }
+    };
+    vector<pair<int, int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
+        vector<pair<int, int>> res;
+        priority_queue<pair<int, int>, vector<pair<int, int> >, cmp> pque;
+        for(int i = 0; i < min((int)nums1.size(), k); ++i){
+            for(int j = 0; j < min((int)nums2.size(), k); ++j){
+                if(pque.size() < k)
+                    pque.push(make_pair(nums1[i], nums2[j]));
+                else if(nums1[i] + nums2[j] < pque.top().first + pque.top().second){
+                    pque.push(make_pair(nums1[i], nums2[j]));
+                    pque.pop();
+                }
+            }
+        }
+        while(!pque.empty()){
+            res.push_back(pque.top());
+            pque.pop();
+        }
+        return res;
+    }
+};
