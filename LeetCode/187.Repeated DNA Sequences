@@ -1,0 +1,16 @@
+class Solution {
+public:
+    vector<string> findRepeatedDnaSequences(string s) {
+        unordered_map<int, int> m;
+        vector<string> res;
+        int idx = 0, num = 0, ss = s.size();
+        while(idx < 9)
+            num = num << 3 | s[idx++] & 7;
+        while(idx < ss){
+            num = num << 3 & 0x3FFFFFFF | s[idx++] & 7;
+            if(m[num]++ == 1)
+                res.push_back(s.substr(idx - 10, 10));
+        } 
+        return res;
+    }
+};
